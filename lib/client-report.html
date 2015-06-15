@@ -120,31 +120,34 @@
         {{/if}}
       {{/unless}}
 
-      {{#each suites}}
-        {{#if suiteNotHidden}}
-            <div class="velocity-suite {{suiteStatus}}">
-                <div class="velocity-suite-header {{suiteStatus}}">
-                  {{suite}}
-                </div>
-                <table class="velocity-result-table">
-                    <tbody>
-                    {{#each reports}}
-                      {{> velocityTestReport}}
-                    {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        {{/if}}
-      {{/each}}
+      {{#with suites}}
+        {{> velocityTestReportTree}}
+      {{/with}}
     </section>
 </template>
 
+<template name="velocityTestReportTree">
+  <div class="velocity-suite" style="margin-left:10px">
+    <div class="velocity-suite-header">
+      {{name}}
+    </div>
+    {{#each children}}
+      {{#unless is_leaf}}
+        {{> velocityTestReportTree}}
+      {{/unless}}
+      {{#if is_leaf}}
+        {{> velocityTestReport}}
+      {{/if}}
+    {{/each}}
+  </div>
+</template>
 <template name="velocityTestReport">
   {{#if reportNotHidden}}
-      <tr class="velocity-test {{#if failed}}failed{{else}}passed{{/if}}">
-          <td class="velocity-test-name">{{{name}}}</td> {{! XXX triple-stache allows curly quotes, etc. - worth it? }}
-          <td class="velocity-test-time">{{#if failed}}Fail{{else}}{{duration}} ms{{/if}}</td>
-      </tr>
+      <div class="velocity-test {{#if failed}}failed{{else}}passed{{/if}}">
+          <div class="velocity-test-name">{{{name}}}</div> {{! XXX triple-stache allows curly quotes, etc. - worth it? }}
+          <div class="velocity-test-time">{{#if failed}}Fail{{else}}{{duration}} ms{{/if}}</div>
+      </div>
+      
     {{#if failed}}
         <tr>
             <td class="velocity-fail-msg" colspan="2">

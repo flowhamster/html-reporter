@@ -254,7 +254,6 @@
   }
 
   .velocity-suite {
-    border-bottom: solid 1px #efefef;
     padding-bottom: 15px;
     &:last-child {
       border-bottom: 0 none;
@@ -272,9 +271,9 @@
     font-family: @velocity-font;
     font-weight: 600;
     letter-spacing: 1px;
-    margin: 20px 0 5px;
     text-align: left;
-
+    clear:both;
+    
     &.passed {
       color: @velocity-green;
     }
@@ -308,11 +307,17 @@
       letter-spacing: 1px;
       padding: 5px 0;
     }
-    .velocity-test-time {
-      text-align: right;
-      font-family: @velocity-font-mono;
-      white-space: nowrap;
+    .velocity-test-name {
+      float:left;
     }
+    .velocity-test-time {
+      font-family: @velocity-font-mono;
+      float:right;
+    }
+  }
+  .velocity-test {
+    clear: both;
+    margin-left:10px;
   }
 
   .velocity-test.failed .velocity-test-time {
